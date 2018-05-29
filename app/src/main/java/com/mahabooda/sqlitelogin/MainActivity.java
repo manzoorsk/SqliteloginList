@@ -18,32 +18,39 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatActivity activity = MainActivity.this;
     private AppCompatTextView textViewName;
     private RecyclerView recyclerViewUsers;
-    private List<User> listUsers;
+    private ArrayList<User> listUsers;
     private UsersRecyclerAdapter usersRecyclerAdapter;
     private DatabaseHelper databaseHelper;
+    private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Users Activity");
         initViews();
         initObjects();
     }
     private void initViews() {
         textViewName = (AppCompatTextView) findViewById(R.id.textViewName);
-        recyclerViewUsers = (RecyclerView) findViewById(R.id.list);
+//        recyclerViewUsers = (RecyclerView) findViewById(R.id.recyclerViewUsers);
+        listView =(ListView) findViewById(R.id.list);
     }
     private void initObjects() {
         listUsers = new ArrayList<>();
-        usersRecyclerAdapter = new UsersRecyclerAdapter(listUsers);
+        usersRecyclerAdapter = new UsersRecyclerAdapter(getApplicationContext(),listUsers);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerViewUsers.setLayoutManager(mLayoutManager);
-        recyclerViewUsers.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewUsers.setHasFixedSize(true);
-        recyclerViewUsers.setAdapter(usersRecyclerAdapter);
+//        RecyclerView
+
+//        usersRecyclerAdapter = new UsersRecyclerAdapter(listUsers);
+//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerViewUsers.setLayoutManager(mLayoutManager);
+//        recyclerViewUsers.setItemAnimator(new DefaultItemAnimator());
+//        recyclerViewUsers.setHasFixedSize(true);
+//        recyclerViewUsers.setAdapter(usersRecyclerAdapter);
+//        databaseHelper = new DatabaseHelper(activity);
+//        ListView
+        listView.setAdapter(usersRecyclerAdapter);
         databaseHelper = new DatabaseHelper(activity);
-
         String emailFromIntent = getIntent().getStringExtra("EMAIL");
         textViewName.setText(emailFromIntent);
 
