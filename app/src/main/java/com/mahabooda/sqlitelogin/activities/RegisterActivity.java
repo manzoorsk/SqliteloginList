@@ -1,4 +1,4 @@
-package com.mahabooda.sqlitelogin;
+package com.mahabooda.sqlitelogin.activities;
 
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -10,6 +10,9 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.mahabooda.sqlitelogin.network.DatabaseHelper;
+import com.mahabooda.sqlitelogin.network.InputValidation;
+import com.mahabooda.sqlitelogin.R;
 import com.mahabooda.sqlitelogin.models.User;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {

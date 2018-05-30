@@ -1,4 +1,4 @@
-package com.mahabooda.sqlitelogin;
+package com.mahabooda.sqlitelogin.network;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -65,27 +65,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<User> getAllUser() {
         // array of columns to fetch
-        String[] columns = {
-                COLUMN_USER_ID,
-                COLUMN_USER_EMAIL,
-                COLUMN_USER_NAME,
-                COLUMN_USER_PASSWORD
-        };
+        String[] columns = {COLUMN_USER_ID, COLUMN_USER_EMAIL, COLUMN_USER_NAME, COLUMN_USER_PASSWORD};
         // sorting orders
-        String sortOrder =
-                COLUMN_USER_NAME + " ASC";
+        String sortOrder = COLUMN_USER_NAME + " ASC";
         List<User> userList = new ArrayList<User>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USER,
-                columns,
-                null,
-                null,
-                null,
-                null,
-                sortOrder);
-
-
+        Cursor cursor = db.query(TABLE_USER, columns, null, null, null, null, sortOrder);
         // Traversing through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
@@ -114,25 +100,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER_PASSWORD, user.getPassword());
 
         // updating row
-        db.update(TABLE_USER, values, COLUMN_USER_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
+        db.update(TABLE_USER, values, COLUMN_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
         db.close();
     }
 
     public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         // delete user record by id
-        db.delete(TABLE_USER, COLUMN_USER_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
+        db.delete(TABLE_USER, COLUMN_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
         db.close();
     }
 
+    // register activity
     public boolean checkUser(String email) {
 
         // array of columns to fetch
-        String[] columns = {
-                COLUMN_USER_ID
-        };
+        String[] columns = {COLUMN_USER_ID};
         SQLiteDatabase db = this.getReadableDatabase();
 
         // selection criteria
@@ -141,13 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // selection argument
         String[] selectionArgs = {email};
 
-        Cursor cursor = db.query(TABLE_USER,
-                columns,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null);
+        Cursor cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null);
         int cursorCount = cursor.getCount();
         cursor.close();
         db.close();
@@ -159,26 +136,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean checkUser(String email, String password) {
+    //login activity
+
+    public boolean checkUser(String username, String password) {
 
         // array of columns to fetch
-        String[] columns = {
-                COLUMN_USER_ID
-        };
+        String[] columns = {COLUMN_USER_ID};
         SQLiteDatabase db = this.getReadableDatabase();
         // selection criteria
-        String selection = COLUMN_USER_EMAIL + " = ?" + " AND " + COLUMN_USER_PASSWORD + " = ?";
+        String selection = COLUMN_USER_NAME + " = ?" + " AND " + COLUMN_USER_PASSWORD + " = ?";
 
         // selection arguments
-        String[] selectionArgs = {email, password};
+        String[] selectionArgs = {username, password};
 
-        Cursor cursor = db.query(TABLE_USER,
-                columns,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null);
+        Cursor cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null);
 
         int cursorCount = cursor.getCount();
 

@@ -1,4 +1,4 @@
-package com.mahabooda.sqlitelogin;
+package com.mahabooda.sqlitelogin.activities;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -11,6 +11,10 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.mahabooda.sqlitelogin.network.DatabaseHelper;
+import com.mahabooda.sqlitelogin.network.InputValidation;
+import com.mahabooda.sqlitelogin.R;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private final AppCompatActivity activity = LoginActivity.this;
 
@@ -19,7 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
 
-    private TextInputEditText textInputEditTextEmail;
+    private TextInputEditText textInputEditTextName;
     private TextInputEditText textInputEditTextPassword;
 
     private AppCompatButton appCompatButtonLogin;
@@ -45,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         textInputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
         textInputLayoutPassword = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
 
-        textInputEditTextEmail = (TextInputEditText) findViewById(R.id.textInputEditTextEmail);
+        textInputEditTextName = (TextInputEditText) findViewById(R.id.textInputEditTextEmail);
         textInputEditTextPassword = (TextInputEditText) findViewById(R.id.textInputEditTextPassword);
 
         appCompatButtonLogin = (AppCompatButton) findViewById(R.id.appCompatButtonLogin);
@@ -76,22 +80,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
     private void verifyFromSQLite() {
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutEmail, getString(R.string.error_message_email))) {
             return;
         }
-        if (!inputValidation.isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
+        if (!inputValidation.isInputEditTextEmail(textInputEditTextName, textInputLayoutEmail, getString(R.string.error_message_email))) {
             return;
         }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_email))) {
             return;
         }
 
-        if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
+        if (databaseHelper.checkUser(textInputEditTextName.getText().toString().trim()
                 , textInputEditTextPassword.getText().toString().trim())) {
 
 
             Intent accountsIntent = new Intent(activity, MainActivity.class);
-            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
+            accountsIntent.putExtra("USERNAME", textInputEditTextName.getText().toString().trim());
             emptyInputEditText();
             startActivity(accountsIntent);
 
@@ -102,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
     private void emptyInputEditText() {
-        textInputEditTextEmail.setText(null);
+        textInputEditTextName.setText(null);
         textInputEditTextPassword.setText(null);
     }
 }

@@ -1,4 +1,4 @@
-package com.mahabooda.sqlitelogin;
+package com.mahabooda.sqlitelogin.network;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,7 +30,8 @@ public class InputValidation {
 
     public boolean isInputEditTextEmail(TextInputEditText textInputEditText, TextInputLayout textInputLayout, String message) {
         String value = textInputEditText.getText().toString().trim();
-        if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
+//        if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()){
+        if (value.isEmpty()) {
             textInputLayout.setError(message);
             hideKeyboardFrom(textInputEditText);
             return false;

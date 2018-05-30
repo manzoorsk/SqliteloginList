@@ -1,6 +1,7 @@
-package com.mahabooda.sqlitelogin;
+package com.mahabooda.sqlitelogin.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.mahabooda.sqlitelogin.R;
+import com.mahabooda.sqlitelogin.activities.ButtonsViewActivity;
 import com.mahabooda.sqlitelogin.models.User;
 
 import java.util.ArrayList;
@@ -65,23 +68,34 @@ import java.util.List;
 //}
 
 public class UsersRecyclerAdapter extends ArrayAdapter<User> {
+    private Context context;
     public UsersRecyclerAdapter(Context context, ArrayList<User> users) {
         super(context, 0, users);
+        this.context=context;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        User user = getItem(position);
+        final User user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user_recycler, parent, false);
         }
         // Lookup view for data population
-        TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
+        final TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
         TextView tvHome = (TextView) convertView.findViewById(R.id.textViewEmail);
         // Populate the data into the template view using the data object
-        tvName.setText(user.getEmail());
-        tvHome.setText(user.getName());
+        tvName.setText(user.getName());
+        tvHome.setText(user.getEmail());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = user.getName();
+                Intent intent = new Intent(context , ButtonsViewActivity.class);
+                intent.putExtra("username",username);
+                context.startActivity(intent);
+            }
+        });
         // Return the completed view to render on screen
         return convertView;
     }

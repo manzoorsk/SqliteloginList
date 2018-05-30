@@ -1,18 +1,22 @@
-package com.mahabooda.sqlitelogin;
+package com.mahabooda.sqlitelogin.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.mahabooda.sqlitelogin.network.DatabaseHelper;
+import com.mahabooda.sqlitelogin.R;
+import com.mahabooda.sqlitelogin.adapters.UsersRecyclerAdapter;
 import com.mahabooda.sqlitelogin.models.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private AppCompatActivity activity = MainActivity.this;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private UsersRecyclerAdapter usersRecyclerAdapter;
     private DatabaseHelper databaseHelper;
     private ListView listView;
+    private String emailFromIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         initObjects();
     }
     private void initViews() {
-        textViewName = (AppCompatTextView) findViewById(R.id.textViewName);
+        textViewName = (AppCompatTextView) findViewById(R.id.user_name);
 //        recyclerViewUsers = (RecyclerView) findViewById(R.id.recyclerViewUsers);
         listView =(ListView) findViewById(R.id.list);
     }
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 //        ListView
         listView.setAdapter(usersRecyclerAdapter);
         databaseHelper = new DatabaseHelper(activity);
-        String emailFromIntent = getIntent().getStringExtra("EMAIL");
+        emailFromIntent = getIntent().getStringExtra("USERNAME");
         textViewName.setText(emailFromIntent);
 
         getDataFromSQLite();
@@ -75,4 +80,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }.execute();
     }
+
 }
