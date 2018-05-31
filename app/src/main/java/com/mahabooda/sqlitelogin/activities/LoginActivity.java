@@ -50,8 +50,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         textInputLayoutPassword = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
 
         textInputEditTextName = (TextInputEditText) findViewById(R.id.textInputEditTextEmail);
+        textInputEditTextName.setText("ali");
         textInputEditTextPassword = (TextInputEditText) findViewById(R.id.textInputEditTextPassword);
-
+        textInputEditTextPassword.setText("12345");
         appCompatButtonLogin = (AppCompatButton) findViewById(R.id.appCompatButtonLogin);
 
         textViewLinkRegister = (AppCompatTextView) findViewById(R.id.textViewLinkRegister);
